@@ -6,12 +6,12 @@
     {% for k,user in post.users %}
         {{ user.firstName ~ ' ' ~ user.lastName }}{% if k < (post.users|length)-1 %}, {% endif %}
     {% endfor %}
-    </a>
     </div>
     <div class="media-right">
 
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
 
     </div>
+    </a>
     <hr>
 {% endif %}

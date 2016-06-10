@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% set nb = 1 %}
+    {% if list['one1'] %}
+        {% include 'default/_rowSelfieBtn.html.twig' with {'post': list['one1'], 'nb':nb} %}
+        {% set nb = nb+1 %}
+    {% endif %}
+    {% if list['one2'] %}
+        {% include 'default/_rowSelfieBtn.html.twig' with {'post': list['one2'], 'nb':nb} %}
+        {% set nb = nb+1 %}
+    {% endif %}
+    {% if list['two'] %}
+        {% include 'default/_rowSelfieBtn.html.twig' with {'post': list['two'], 'nb':nb} %}
+        {% set nb = nb+1 %}
+    {% endif %}
+    {% if list['three'] %}
+        {% include 'default/_rowSelfieBtn.html.twig' with {'post': list['three'], 'nb':nb} %}
+        {% set nb = nb+1 %}
+    {% endif %}
+    {% if list['five'] %}
+        {% include 'default/_rowSelfieBtn.html.twig' with {'post': list['five'], 'nb':nb} %}
+        {% set nb = nb+1 %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,6 @@
+version: '2'
+services:
+  web:
+    build: docker/web
+    volumes:
+      - .:/var/www

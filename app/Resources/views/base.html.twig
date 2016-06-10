@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+        <title>{% block title %}Welcome!{% endblock %}</title>
+
+        <!-- Bootstrap -->
+        <link href="/vendor/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/vendor/font-awesome-4.6.3/css/font-awesome.css" rel="stylesheet">
+        <style>
+            .container {
+               /* padding-top: 50px;*/
+
+            }
+            .navbar-brand {
+                padding-top: 0px;
+            }
+            .col-centered{
+                float: none;
+                margin: 0 auto;
+            }
+            .media-body a{
+                color: black;
+            }
+            .media-right {
+                vertical-align: middle;
+                font-size: 25px;
+                padding-right: 5px;
+            }
+        </style>
+        {% block stylesheets %}{% endblock %}
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
+        <![endif]-->
+    </head>
+    <body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                {% if app.user %}
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                {% endif %}
+                <a class="navbar-brand" href="#"><img src="/images/logo.png"/></a>
+            </div>
+            {% if app.user %}
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><p class="navbar-text">Bonjour {{ app.user.firstName }}!</p></li>
+                    <li {% if app.request.get('_route') == 'homepage' %}class="active"{% endif %}><a href="{{ path('homepage') }}">Défis</a></li>
+                    <li {% if app.request.get('_route') == 'score'    %}class="active"{% endif %}><a href="{{ path('score')    }}">Score</a></li>
+                    <li {% if app.request.get('_route') == 'logout'    %}class="active"{% endif %}><a href="{{ path('logout')    }}">Déconnexion</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+            {% endif %}
+        </div><!-- /.container-fluid -->
+    </nav>
+
+
+        <div class="container">
+            {#<div class="row">
+                <div class="col-lg-1 col-centered"><img src="/images/logo.png"/></div>
+            </div><div>
+#}
+            {% for flash_message in app.session.flashBag.get('error') %}
+                <div class="flash-error">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+
+            {% block body %}{% endblock %}
+        </div>
+        <script src="/vendor/jquery/jquery-1.11.3.min.js"></script>
+        <script src="/vendor/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

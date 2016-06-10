@@ -236,25 +236,4 @@ class DefaultController extends Controller
             'users' => $users
         ]);
     }
-
-    /**
-     * @Route("/api/mosaic", name="mosaic")
-     */
-    public function mosaicAction(Request $request)
-    {
-        $posts = $this->getDoctrine()->getRepository('AppBundle:Post')->findClose();
-
-        $o = [];
-        foreach ($posts as $post) {
-            $o[] = [
-                'id' => $post->getId(),
-                'question'=> $post->getQuestion(),
-                'response' => $post->getResponse(),
-                'url' => $post->getPhoto()
-            ];
-
-        }
-
-        return new JsonResponse($o);
-    }
 }

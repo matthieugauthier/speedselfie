@@ -24,12 +24,16 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function findClose()
+    public function findClose($maxResults = 0)
     {
         $qb = $this->createQueryBuilder('p');
         $qb
             ->where('p.photo IS NOT NULL')
             ->orderBy('p.datetime','DESC');
+
+        if($maxResults) {
+            $qb->setMaxResults($maxResults);
+        }
 
         return $qb
             ->getQuery()

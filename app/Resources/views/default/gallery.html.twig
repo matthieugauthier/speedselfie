@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>Liste des dernières photos :</h2>
+
+    {% for post in posts %}
+        <img src="{{ post.photo }}" style="max-width: 100%;min-width: 100%;" />
+    {% endfor %}
+{% endblock %}

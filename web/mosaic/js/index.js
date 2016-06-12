@@ -20,7 +20,7 @@ app.controller('MainCtrl', function ($scope, $http, $q,$interval) {
             vm.shots = data.data;
             vm.loadingMore = false;
             //setTimeout(vm.loadMoreShots(),5000);
-            $interval(function () {vm.loadMoreShots();},10000);
+
         }, function () {
             vm.loadingMore = false;
         });
@@ -28,5 +28,6 @@ app.controller('MainCtrl', function ($scope, $http, $q,$interval) {
     };
 
     vm.loadMoreShots();
+    $interval(function () {vm.loadMoreShots();},5000);
 
 });

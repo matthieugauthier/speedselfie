@@ -12,17 +12,7 @@
             {% endif %}
             <a class="navbar-brand" href="#"><img src="/images/logo_new.png" width="250px"/></a>
         </div>
-        {% if app.user %}
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><p class="navbar-text">Bonjour {{ app.user.firstName }}!</p></li>
-                    <li {% if app.request.get('_route') == 'homepage' %}class="active"{% endif %}><a href="{{ path('homepage') }}">Défis</a></li>
-                    <li {% if app.request.get('_route') == 'score'    %}class="active"{% endif %}><a href="{{ path('score')    }}">Score</a></li>
-                    <li {% if app.request.get('_route') == 'gallery'  %}class="active"{% endif %}><a href="{{ path('gallery')   }}">Gallerie</a></li>
-                    <li {% if app.request.get('_route') == 'logout'   %}class="active"{% endif %}><a href="{{ path('logout')    }}">Déconnexion</a></li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        {% endif %}
+
+        {% include '_header_menu.html.twig' %}
     </div><!-- /.container-fluid -->
 </nav>

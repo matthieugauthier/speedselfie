@@ -118,8 +118,6 @@ class DefaultController extends Controller
      */
     public function takeAction($postId, Request $request)
     {
-        $myUser = $user = $this->getUser();
-
         $post = $this->getDoctrine()->getRepository('AppBundle:Post')->find($postId);
 
         if (!$post || $myUser->getId() != $post->getAuthor()->getId() || $post->getPhoto()) {

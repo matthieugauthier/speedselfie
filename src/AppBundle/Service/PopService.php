@@ -48,7 +48,7 @@ class PopService
      * @return null|Post
      * @throws \Exception
      */
-    public function tryToFindPost($type, $myUser, $users)
+    public function tryToFindPost($type, User $myUser, $users)
     {
 
         try {

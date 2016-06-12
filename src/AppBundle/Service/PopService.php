@@ -7,6 +7,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\PostRepository;
 use AppBundle\Entity\QuestionRepository;
 use AppBundle\Service\ShuffleService;
+use Doctrine\ORM\EntityManager;
 
 class PopService
 {
@@ -16,12 +17,15 @@ class PopService
     protected $postRepository;
     /** @var QuestionRepository $questionRepository */
     protected $questionRepository;
+    /** @var EntityManager $em */
+    protected $em;
 
-    public function __construct(ShuffleService $shuffleService, PostRepository $postRepository, QuestionRepository $questionRepository)
+    public function __construct(ShuffleService $shuffleService, PostRepository $postRepository, QuestionRepository $questionRepository, EntityManager $em)
     {
         $this->shuffleService = $shuffleService;
         $this->postRepository = $postRepository;
         $this->questionRepository = $questionRepository;
+        $this->em = $em;
     }
 
     /**
@@ -39,6 +43,34 @@ class PopService
         }
 
         return $this->tryToFindPost($type, $myUser, $users);
+    }
+
+    /**
+     * @param User $myUser
+     * @param Array $users
+     * @return null|Post
+     * @throws \Exception
+     */
+    public function getPostSpecialOne(User $myUser, $users)
+    {
+        $o = ['one1' => null, 'one2' => null];
+
+        $types = $this->postRepository->findOpenType(1, $myUser);
+
+        if (count($types) === 2) {
+            $o['one1'] = $types[0];
+            $o['one2'] = $types[1];
+        }
+        if (count($types) === 1) {
+            $o['one1'] = $types[0];
+            $o['one2'] = $this->tryToFindPost(1, $myUser, $users);
+        }
+        if (count($types) === 0) {
+            $o['one1'] = $this->tryToFindPost(1, $myUser, $users);
+            $o['one2'] = $this->tryToFindPost(1, $myUser, $users);
+        }
+
+        return $o;
     }
 
     /**
@@ -60,11 +92,12 @@ class PopService
             $p->setType($type);
             $p->setQuestion($this->getRandomQuestion($type));
 
+            $this->em->persist($p);
+            $this->em->flush();
+
             return $p;
         } catch (\Exception $e) {
-            if ($e->getCode() === 8000) {
-
-            } else {
+            if ($e->getCode() !== 8000 && $e->getCode() !== 8001) {
                 throw $e;
             }
 

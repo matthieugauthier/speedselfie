@@ -19,94 +19,19 @@ class DefaultController extends Controller
         $myUser = $user = $this->getUser();
         $users = $this->getDoctrine()->getRepository('AppBundle:User')->findMates($user);
 
-        $list = unserialize($this->get('session')->get('list'));
+        $list = $this->get('pop')->getPostSpecialOne($myUser, $users);
+        $list['two'] = $list['three'] = $list['five'] = null;
 
-        if (!$list) {
-            $list = [
-                'one1' => null,
-                'one2' => null,
-                'two' => null,
-                'three' => null,
-                'five' => null,
-            ];
+        foreach (['two' => 2, 'three' => 3, 'five' => 5] as $type => $number) {
+            $list[$type] = $this->get('pop')->getPost($number, $myUser, $users);
         }
 
-        $types = $this->getDoctrine()->getRepository('AppBundle:Post')->findOpenType(1, $myUser);
-        if (count($types) === 2) {
-            $list['one1'] = $types[0];
-            $list['one2'] = $types[1];
-        }
-        if (count($types) === 1) {
-            $list['one1'] = $types[0];
-            try {
-                $p = $this->get('pop')->tryToFindPost(1, $myUser, $users);
-
-                $this->getDoctrine()->getManager()->persist($p);
-                $this->getDoctrine()->getManager()->flush();
-                $list['one2'] = $p;
-            } catch (\Exception $e) {
-                if ($e->getCode() === 8000) {
-
-                } elseif ($e->getCode() === 8001) {
-
-                } else {
-                    throw $e;
-                }
-            }
-        }
-        if (count($types) === 0) {
-            try {
-                $p = $this->get('pop')->tryToFindPost(1, $myUser, $users);
-
-                $this->getDoctrine()->getManager()->persist($p);
-                $this->getDoctrine()->getManager()->flush();
-                $list['one1'] = $p;
-            } catch (\Exception $e) {
-                if ($e->getCode() === 8000) {
-
-                } elseif ($e->getCode() === 8001) {
-
-                } else {
-                    throw $e;
-                }
-            }
-            try {
-                $p2 = $this->get('pop')->tryToFindPost(1, $myUser, $users);
-
-                $this->getDoctrine()->getManager()->persist($p2);
-                $this->getDoctrine()->getManager()->flush();
-                $list['one2'] = $p2;
-            } catch (\Exception $e) {
-                if ($e->getCode() === 8000) {
-
-                } elseif ($e->getCode() === 8001) {
-
-                } else {
-                    throw $e;
-                }
-            }
-        }
-
-        $a = ['two' => 2, 'three' => 3, 'five' => 5];
-        foreach ($a as $type => $number) {
-            try {
-                $list[$type] = $this->get('pop')->getPost($number, $myUser, $users);
-                if ($list[$type] !== null) {
-                    $this->getDoctrine()->getManager()->persist($list[$type]);
-                }
-            } catch (\Exception $e) {
-                if ($e->getCode() === 8000) {
-
-                } elseif ($e->getCode() === 8001) {
-
-                } else {
-                    throw $e;
-                }
+        foreach ($list as $item) {
+            if ($item) {
+                $this->getDoctrine()->getManager()->persist($item);
             }
         }
         $this->getDoctrine()->getManager()->flush();
-
-        // dump($list);
 
         return $this->render('default/index.html.twig', [
             'list' => $list
@@ -118,6 +43,8 @@ class DefaultController extends Controller
      */
     public function takeAction($postId, Request $request)
     {
+        $myUser = $user = $this->getUser();
+
         $post = $this->getDoctrine()->getRepository('AppBundle:Post')->find($postId);
 
         if (!$post || $myUser->getId() != $post->getAuthor()->getId() || $post->getPhoto()) {

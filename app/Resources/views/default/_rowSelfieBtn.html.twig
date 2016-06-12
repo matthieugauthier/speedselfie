@@ -1,5 +1,6 @@
 {% if post is not null %}
-    <a href="{{ path('take',{postId:post.id}) }}" style="display:block" class="media">
+    {%  dump(post.id) %}
+    <a href="{{ path('take',{"postId":post.id}) }}" style="display:block" class="media">
     <div class="media-body">
             <h3>Défi #{{ nb }}</h3>
     Prendre un selfie avec

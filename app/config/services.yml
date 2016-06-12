@@ -11,7 +11,7 @@ services:
         class: AppBundle\Service\ShuffleService
     pop:
         class: AppBundle\Service\PopService
-        arguments: ["@suffle","@repository_post","@repository_question"]
+        arguments: ["@suffle","@repository_post","@repository_question","@doctrine.orm.default_entity_manager"]
 
     repository_post:
             class: Doctrine\ORM\EntityRepository

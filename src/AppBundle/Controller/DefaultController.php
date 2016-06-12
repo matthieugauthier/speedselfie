@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\SelfieType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -51,46 +52,31 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('homepage'));
         }
 
-        $form = $this->createFormBuilder()
-            ->add('file', FileType::class, [
-                'label' => 'Selfie',
-                'attr' => [
-                    'accept' => "image/*",
-                    'class' => "inputfile hidden"
-                ]
-            ])
-            ->add('response', TextType::class, array(
-                'label' => $post->getQuestion(),
-                'attr' => [
-                    'class' => "form-control"
-                ]
-            ))
-            ->add('send', SubmitType::class, array(
-                'label' => 'Envoyer',
-                'attr' => [
-                    'class' => "btn btn-primary btn-lg btn-block"
-                ]
-            ))
-            ->getForm();
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $fc = file_get_contents($form->getData()['file']->getRealPath());
-            $ext = explode('.', $form->getData()['file']->getClientOriginalName());
-            $ext = $ext[count($ext) - 1];
-            file_put_contents('upload/' . $post->getId() . '.' . $ext, $fc);
+        $form = $this->createForm(SelfieType::class, $post);
 
-            $post->setPhoto('upload/' . $post->getId() . '.' . $ext);
-            $post->setDatetime(new \DateTime());
-            $post->setResponse($form->getData()['response']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $file = $post->getPhoto();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->container->getParameter('upload_directory'),
+                $fileName
+            );
+
+            $post->setPhoto($fileName)
+                ->setDatetime(new \DateTime());
 
             $this->getDoctrine()->getManager()->persist($post);
-            $this->getDoctrine()->getManager()->flush();
 
-            $myUser = $this->getDoctrine()->getRepository('AppBundle:User')->findOneById($myUser);
-            $s = $myUser->getScore();
-            $s += $post->getType();
-
-            $myUser->setScore($s);
+            $myUser->setScore($myUser->getScore() + $post->getType());
             $this->getDoctrine()->getManager()->persist($myUser);
             $this->getDoctrine()->getManager()->flush();
 

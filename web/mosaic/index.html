@@ -28,7 +28,7 @@
                     ag-infinite-scroll="vm.loadMoreShots()"
                     >
                 <div class="card" ng-repeat="shot in vm.shots track by shot.id">
-                    <img src="/{{shot.url}}" style="max-width: 100%;min-width: 100%"/>
+                    <img src="/uploads/{{shot.url}}" style="max-width: 100%;min-width: 100%"/>
 
                     <div class="inside">
                         <h3 ng-bind="shot.question">{{shot.question}}</h3>

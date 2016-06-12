@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -51,6 +52,7 @@ class Post
      * @var text
      *
      * @ORM\Column(name="photo", type="string", nullable=true)
+     * @Assert\File(mimeTypes={ "image/jpeg","image/gif","image/png","image/bmp","image/tiff","image/x-icon"})
      */
     private $photo;
 

@@ -34,7 +34,7 @@ class ShuffleService
     }
 
     public function getCoupleOfUserByTypeAndPosts($type, $users, $posts)
-    {//dump($type,$users,$posts);
+    {
         if( count($users) < $type) {
             throw new \Exception('Not enough mates',8000);
         }

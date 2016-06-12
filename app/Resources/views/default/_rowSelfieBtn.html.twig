@@ -1,5 +1,4 @@
 {% if post is not null %}
-    {%  dump(post.id) %}
     <a href="{{ path('take',{"postId":post.id}) }}" style="display:block" class="media">
     <div class="media-body">
             <h3>Défi #{{ nb }}</h3>

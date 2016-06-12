@@ -44,8 +44,6 @@ class DefaultController extends Controller
         if (count($types) === 1) {
             $list['one1'] = $types[0];
             try {
-                $posts = $this->getDoctrine()->getRepository('AppBundle:Post')->findBy(['type' => 1, 'author' => $myUser->getId()]);
-
                 $p = $this->get('pop')->tryToFindPost(1, $myUser, $users);
 
                 $this->getDoctrine()->getManager()->persist($p);
@@ -63,8 +61,6 @@ class DefaultController extends Controller
         }
         if (count($types) === 0) {
             try {
-                $posts = $this->getDoctrine()->getRepository('AppBundle:Post')->findBy(['type' => 1, 'author' => $myUser->getId()]);
-
                 $p = $this->get('pop')->tryToFindPost(1, $myUser, $users);
 
                 $this->getDoctrine()->getManager()->persist($p);
@@ -80,8 +76,6 @@ class DefaultController extends Controller
                 }
             }
             try {
-                $posts = $this->getDoctrine()->getRepository('AppBundle:Post')->findBy(['type' => 1, 'author' => $myUser->getId()]);
-
                 $p2 = $this->get('pop')->tryToFindPost(1, $myUser, $users);
 
                 $this->getDoctrine()->getManager()->persist($p2);
@@ -98,46 +92,21 @@ class DefaultController extends Controller
             }
         }
 
-        try {
-            $list['two'] = $this->get('pop')->getPost(2, $myUser, $users);
-            if ($list['two'] !== null) {
-                $this->getDoctrine()->getManager()->persist($list['two']);
-            }
-        } catch (\Exception $e) {
-            if ($e->getCode() === 8000) {
+        $a = ['two' => 2, 'three' => 3, 'five' => 5];
+        foreach ($a as $type => $number) {
+            try {
+                $list[$type] = $this->get('pop')->getPost($number, $myUser, $users);
+                if ($list[$type] !== null) {
+                    $this->getDoctrine()->getManager()->persist($list[$type]);
+                }
+            } catch (\Exception $e) {
+                if ($e->getCode() === 8000) {
 
-            } elseif ($e->getCode() === 8001) {
+                } elseif ($e->getCode() === 8001) {
 
-            } else {
-                throw $e;
-            }
-        }
-        try {
-            $list['three'] = $this->get('pop')->getPost(3, $myUser, $users);
-            if ($list['three'] !== null) {
-                $this->getDoctrine()->getManager()->persist($list['three']);
-            }
-        } catch (\Exception $e) {
-            if ($e->getCode() === 8000) {
-
-            } elseif ($e->getCode() === 8001) {
-
-            } else {
-                throw $e;
-            }
-        }
-        try {
-            $list['five'] = $this->get('pop')->getPost(5, $myUser, $users);
-            if ($list['five'] !== null) {
-                $this->getDoctrine()->getManager()->persist($list['five']);
-            }
-        } catch (\Exception $e) {
-            if ($e->getCode() === 8000) {
-
-            } elseif ($e->getCode() === 8001) {
-
-            } else {
-                throw $e;
+                } else {
+                    throw $e;
+                }
             }
         }
         $this->getDoctrine()->getManager()->flush();

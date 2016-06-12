@@ -11,34 +11,8 @@
         <!-- Bootstrap -->
         <link href="/vendor/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
         <link href="/vendor/font-awesome-4.6.3/css/font-awesome.css" rel="stylesheet">
-        <style>
-            .container {
-               /* padding-top: 50px;*/
-
-            }
-            .navbar-brand {
-                padding-top: 0px;
-                padding-right: 0px;
-            }
-            .col-centered{
-                float: none;
-                margin: 0 auto;
-            }
-            a .media-body,a .media-right{
-                color: black;
-            }
-            .media-right {
-                vertical-align: middle;
-                font-size: 25px;
-                padding-right: 5px;
-            }
-            hr{
-                margin: 0;
-            }
-            img {
-                image-orientation: from-image !important;
-            }
-        </style>
+        <link href="/vendor/custom-file-input/component.css" rel="stylesheet">
+        <link href="/syles.css" rel="stylesheet">
         {% block stylesheets %}{% endblock %}
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -61,7 +35,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 {% endif %}
-                <a class="navbar-brand" href="#"><img src="/images/logo.png"/></a>
+                <a class="navbar-brand" href="#"><img src="/images/logo_new.png" width="250px"/></a>
             </div>
             {% if app.user %}
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -80,10 +54,6 @@
 
 
         <div class="container">
-            {#<div class="row">
-                <div class="col-lg-1 col-centered"><img src="/images/logo.png"/></div>
-            </div><div>
-#}
             {% for flash_message in app.session.flashBag.get('error') %}
                 <div class="flash-error">
                     {{ flash_message }}
@@ -94,6 +64,7 @@
         </div>
         <script src="/vendor/jquery/jquery-1.11.3.min.js"></script>
         <script src="/vendor/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+        <script src="/vendor/custom-file-input/jquery.custom-file-input.js"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

@@ -19,3 +19,5 @@ Firstname;Lastname;Username;Password
 Type;Question
 ```
 Type allow *solo* or *multi* .
+
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/24475b36-b248-4985-9ad6-3023358e6679/big.png)](https://insight.sensiolabs.com/projects/24475b36-b248-4985-9ad6-3023358e6679)

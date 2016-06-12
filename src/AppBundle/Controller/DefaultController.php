@@ -167,7 +167,7 @@ class DefaultController extends Controller
                 'label' => 'Selfie',
                 'attr' => [
                     'accept' => "image/*",
-                    'class' => "btn btn-primary btn-lg btn-block"
+                    'class' => "inputfile hidden"
                 ]
             ])
             ->add('response', TextType::class, array(

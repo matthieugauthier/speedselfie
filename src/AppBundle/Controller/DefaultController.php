@@ -20,7 +20,7 @@ class DefaultController extends Controller
         $users = $this->getDoctrine()->getRepository('AppBundle:User')->findMates($user);
 
         $list = $this->get('pop')->getPostSpecialOne($myUser, $users);
-        $list['two'] = $list['three'] = $list['five'] = null;
+        $list['five'] = $list['three'] = $list['two'] = null;
 
         foreach (['two' => 2, 'three' => 3, 'five' => 5] as $type => $number) {
             $list[$type] = $this->get('pop')->getPost($number, $myUser, $users);

@@ -31,7 +31,7 @@ class PopService
      * @return null|Post
      * @throws \Exception
      */
-    public function getPost($type, $myUser, $users)
+    public function getPost($type, User $myUser, $users)
     {
         $types = $this->postRepository->findOpenType($type, $myUser);
         if (count($types)) {

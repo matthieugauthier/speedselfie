@@ -1,6 +1,6 @@
-rm web/upload/*
-php bin/console d:d:d --force --if-exists
-php bin/console d:d:c
-php bin/console d:s:c
-php bin/console import:users equipe.csv
-php bin/console import:questions questions.csv
+rm web/uploads/*
+#php bin/console d:d:d --force --if-exists
+/usr/local/php7.0/bin/php bin/console bin/console d:s:d --force
+/usr/local/php7.0/bin/php bin/console bin/console d:s:c
+/usr/local/php7.0/bin/php bin/console bin/console import:users equipe.csv
+/usr/local/php7.0/bin/php bin/console bin/console import:questions questions.csv

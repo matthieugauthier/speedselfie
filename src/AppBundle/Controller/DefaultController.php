@@ -80,6 +80,8 @@ class DefaultController extends Controller
             $this->getDoctrine()->getManager()->persist($myUser);
             $this->getDoctrine()->getManager()->flush();
 
+            $this->get('session')->getFlashBag('success')->add('success', '+'.$post->getType().' points!');
+
             return $this->redirect($this->generateUrl('homepage'));
         }
 

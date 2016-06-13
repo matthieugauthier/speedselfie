@@ -27,7 +27,12 @@
 
         <div class="container">
             {% for flash_message in app.session.flashBag.get('error') %}
-                <div class="flash-error">
+                <div class="bg-danger">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+            {% for flash_message in app.session.flashBag.get('success') %}
+                <div class="bg-success">
                     {{ flash_message }}
                 </div>
             {% endfor %}

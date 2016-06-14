@@ -31,3 +31,19 @@ img {
     width: 0;
     height: 0;
 }
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+@media only screen and (max-width: 250px) {
+    .navbar-brand img {
+        width: 180px;
+    }
+}
+.navbar-brand img {
+    width: 250px;
+}

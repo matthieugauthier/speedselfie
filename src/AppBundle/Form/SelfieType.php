@@ -24,7 +24,7 @@ class SelfieType extends AbstractType
                 'label' => 'Selfie',
                 'attr' => [
                     'accept' => "image/*",
-                    'class' => "inputfile hidden"
+                    'class' => "inputfile"
                 ]
             ])
             ->add('response', TextType::class, array(

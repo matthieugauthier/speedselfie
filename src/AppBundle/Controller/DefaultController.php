@@ -58,7 +58,7 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($request->getMethod() === "POST" && $form->isSubmitted() && $form->isValid()) {
-            
+
             /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
             $file = $post->getPhoto();
 

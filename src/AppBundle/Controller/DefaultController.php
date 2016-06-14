@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Post;
 use AppBundle\Form\SelfieType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -56,9 +57,8 @@ class DefaultController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-
+        if ($request->getMethod() === "POST" && $form->isSubmitted() && $form->isValid()) {
+            
             /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
             $file = $post->getPhoto();
 

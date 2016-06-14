@@ -52,6 +52,7 @@ class Post
      * @var text
      *
      * @ORM\Column(name="photo", type="string", nullable=true)
+     * @Assert\NotBlank(message="Photo obligatoire")
      * @Assert\File(mimeTypes={ "image/jpeg","image/gif","image/png","image/bmp","image/tiff","image/x-icon"})
      */
     private $photo;
@@ -66,6 +67,7 @@ class Post
      * @var text
      *
      * @ORM\Column(name="response", type="string", nullable=true)
+     * @Assert\NotBlank(message="Réponse obligatoire")
      */
     private $response;
 
